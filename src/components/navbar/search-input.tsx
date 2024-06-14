@@ -8,7 +8,7 @@ export const SearchInput = () => {
         className="absolute top-1/2 left-3 transform -translate-y-1/2 text-muted-foreground h-4 w-4"
       />
       <Input
-        className="w-full max-w-[316px] pl-9 h-[40px]"
+        className="w-full max-w-[416px] pl-9 h-[40px] border-neutral-200"
         placeholder="Search boards"
       />
     </div>

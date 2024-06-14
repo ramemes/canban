@@ -5,13 +5,12 @@ export const DashboardLayout = ({
   children 
 }: {children: React.ReactNode}) => {
   return (
-    <main className="flex flex-col h-full">
+    <main className="flex flex-col h-full ">
       <NavBar/>
-      <div className="flex flex-row flex-1">
-        <SideBar />
+      <div className="flex flex-row h-full">
+        <SideBar/>
         {children}
       </div>
-      
     </main>
   )
 };

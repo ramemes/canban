@@ -12,9 +12,9 @@ const font = Poppins({
 
 export const NavBar = () => {
   return (
-    <div className="flex items-center justify-between gap-x-4 p-3 w-full h-[55px] bg-slate-500">
+    <div className="z-[1] flex items-center justify-between gap-x-4 p-3 w-full h-[65px] shadow-sm">
       <Link href="/dashboard">
-        <div className="flex items-center justify-center gap-x-2 w-48">
+        <div className="flex items-center justify-center gap-x-2 w-44">
           <Image
             src="./logo.svg"
             width={50}
@@ -30,7 +30,7 @@ export const NavBar = () => {
       </Link>
 
 
-      <div className="flex items-center gap-x-4">
+      <div className="flex items-center gap-x-5 pr-1">
         <SearchInput/>
         <UserButton/>
       </div>
