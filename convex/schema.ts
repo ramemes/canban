@@ -8,7 +8,8 @@ export default defineSchema({
     authorId: v.string(),
     authorName: v.string(),
   })
-    .index("by_author", ["authorId"]),
+    .index("by_author_id", ["authorId"]),
+
 
   lists: defineTable({
     title: v.string(),
