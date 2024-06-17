@@ -25,7 +25,7 @@ export const BoardCard = ({
             fill
             className="z-[0] rounded-md"
           />
-          <p className="z-[1] font-semibold shadow-md">
+          <p className="z-[1] font-semibold ">
             {title}
           </p>
         </div>
