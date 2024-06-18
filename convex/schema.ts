@@ -24,5 +24,5 @@ export default defineSchema({
     color: v.string(),
     listId: v.id("lists")
   })
-    .index("by_list",["listId"])
+    .index("by_list", ["listId"])
 })
