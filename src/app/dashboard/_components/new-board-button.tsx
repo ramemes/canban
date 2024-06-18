@@ -4,6 +4,7 @@ import { api } from "../../../../convex/_generated/api";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
+import { imgFromPublic } from "../../../../utils/utils";
 
 interface NewBoardButtonProps {
   authorId: string;
@@ -20,10 +21,12 @@ export const NewBoardButton = ({
 
   const createBoard = () => {
     if (!user) return;
+    const randomImage = imgFromPublic()
 
     mutate({
       authorId: authorId,
       title: "Untitled",
+      imageUrl: randomImage
     })
     .then((board) => {
       toast.success("Board created");

@@ -18,7 +18,9 @@ export const ListCard = ({
 }: ListCardProps) => {
   return (
     <div className="flex flex-col bg-blue-500 h-fit w-64 p-3  gap-y-3">
-      <Header/>
+      <Header
+        title={title}
+      />
       <CardList
         listId={listId}
       />
