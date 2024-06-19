@@ -24,7 +24,8 @@ export const ListCard = ({
       <CardList
         listId={listId}
       />
-      <Footer/>
+      <Footer
+        listId={listId}/>
     </div>
   )
 };
