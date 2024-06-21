@@ -36,7 +36,7 @@ const BoardIdPage = ({
   }
 
   return (
-    <div className="flex w-full flex-col bg-blue-200">
+    <div className="flex w-full flex-col bg-blue-200 overflow-x-hidden">
       <BoardNav
         title={board.title}
       />

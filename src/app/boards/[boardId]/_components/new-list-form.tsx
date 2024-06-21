@@ -11,10 +11,13 @@ import { z } from "zod"
 import { useApiMutation } from "../../../../../hooks/useApiMutation";
 import { api } from "../../../../../convex/_generated/api";
 import { toast } from "sonner";
+import { useQuery } from "convex/react";
+import { Id } from "../../../../../convex/_generated/dataModel";
 
 interface NewListFormProps {
   boardId: string;
   setAddingList: any;
+  // listsLength: number;
 }
  
 const formSchema = z.object({
@@ -25,8 +28,10 @@ const newListColor = "000000"
 
 export const NewListForm = ({
   boardId,
-  setAddingList
+  setAddingList,
+  // listsLength
 }: NewListFormProps) => {
+
   const { user } = useUser()
   const { mutate, pending } = useApiMutation(api.list.createList);
 
@@ -38,24 +43,28 @@ export const NewListForm = ({
   })
 
 
+  const listsLength = useQuery(api.lists.getListsLength, {
+    boardId: boardId as Id<"boards">,
+  })
+
 
   const createNewList = () => {
-
     const values = form.getValues()
     if (!user) return;
 
     mutate({
       boardId,
       title: values.title,
-      color:  newListColor    
+      color:  newListColor,
+      index: listsLength    
     })
-
-    .catch(() => toast.error("Failed to create list"))
+    .catch((err) => {
+      console.log(err)
+      toast.error("Failed to create list")
+    })
     .finally(() => {
       setAddingList(false)
     })
-
-
   }
 
   return (

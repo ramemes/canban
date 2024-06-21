@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { CardList } from "../card-list";
 import { Footer } from "./footer";
 import { Header } from "./header";
@@ -17,7 +18,11 @@ export const ListCard = ({
   creationTime
 }: ListCardProps) => {
   return (
-    <div className="flex flex-col bg-blue-500 h-fit w-64 p-3  gap-y-3">
+    <div 
+      className={cn("flex flex-col bg-blue-500 h-fit min-w-64 p-3  gap-y-3 rounded-xl",
+        `bg-gray-800`
+      )}
+    >
       <Header
         title={title}
       />

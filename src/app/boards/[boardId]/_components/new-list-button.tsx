@@ -7,10 +7,12 @@ import { NewListForm } from "./new-list-form";
 
 interface NewListButtonProps {
   boardId: string;
+  // listsLength: number;
 }
 
 export const NewListButton = ({
-  boardId
+  boardId,
+  // listsLength
 }: NewListButtonProps) => {
 
   const [addingList, setAddingList] = useState(false);
@@ -24,6 +26,7 @@ export const NewListButton = ({
           <NewListForm 
             boardId={boardId}
             setAddingList={setAddingList}
+            // listsLength={listsLength}
           />
         :
           <Button 

@@ -14,6 +14,7 @@ export default defineSchema({
   lists: defineTable({
     title: v.string(),
     color: v.string(),
+    index: v.number(),
     boardId: v.id("boards")
   })
     .index("by_board", ["boardId"]),

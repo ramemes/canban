@@ -19,7 +19,7 @@ export const ListList = ({
 
 
   return (
-    <div className="flex flex-row p-8 gap-x-8">
+    <div className="flex flex-row p-8 gap-x-4 h-full w-full overflow-x-scroll">
         {lists?.map((list) => (
           <ListCard 
             key={list._id}
@@ -31,6 +31,7 @@ export const ListList = ({
         ))
         }
         <NewListButton
+          // listsLength={lists ? lists.length : 0}
           boardId={boardId}
         />
     </div>

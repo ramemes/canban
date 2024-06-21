@@ -19,7 +19,7 @@ interface NewCardFormProps {
 }
 
 const formSchema = z.object({
-  title: z.string().min(2).max(50),
+  title: z.string().min(2).max(100),
 })
 
 const newCardColor = "000000"

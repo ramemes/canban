@@ -6,6 +6,7 @@ export const createList = mutation({
     boardId: v.id("boards"),
     title: v.string(),
     color: v.string(),
+    index: v.number(),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -18,6 +19,7 @@ export const createList = mutation({
       boardId: args.boardId,
       title: args.title,
       color: args.color,
+      index: args.index
     })
 
     return list
