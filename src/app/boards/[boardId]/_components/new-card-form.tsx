@@ -11,16 +11,14 @@ import { z } from "zod"
 import { useApiMutation } from "../../../../../hooks/useApiMutation";
 import { api } from "../../../../../convex/_generated/api";
 import { toast } from "sonner";
-import { useEffect } from "react";
+import { ReactEventHandler, useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface NewCardFormProps {
   listId: string;
   setAddingCard: any;
 }
 
-const formSchema = z.object({
-  title: z.string().min(2).max(100),
-})
 
 const newCardColor = "000000"
 
@@ -33,23 +31,23 @@ export const NewCardForm = ({
   const { user } = useUser()
   const { mutate, pending } = useApiMutation(api.card.createCard);
 
+  const [cardTitle, setCardTitle] = useState("")
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-    },
-  })
 
-  const createNewCard = () => {
+  const createNewCard = (e: any) => {
+    e.preventDefault()
 
-    const values = form.getValues()
     if (!user) return;
+
+    if (!cardTitle) {
+      toast.error("Please enter a card title")
+      return
+    }
 
     mutate({
       listId,
-      title: values.title,
-      color:  newCardColor ,
+      title: cardTitle,
+      color:  newCardColor,
       description: ""   
     })
 
@@ -58,27 +56,26 @@ export const NewCardForm = ({
       setAddingCard(false)
     })
 
-
   }
 
+
   return (
-    <Form {...form}>
-    <form onSubmit={form.handleSubmit(createNewCard)} onBlur={() => setAddingCard(false)} className="space-y-2">
-      <FormField
-        control={form.control}
-        name="title"
-        render={({ field }) => (
-          <FormItem>
-            <FormControl>
-              <Input autoFocus placeholder="Enter card title..." {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
+    <div className="flex flex-col gap-y-2" onBlur={() => setAddingCard(false)}>
+      <Input 
+        value={cardTitle}
+        onChange={(e) => setCardTitle(e.target.value)}
+        onKeyDown={(e) => {e.key === "Enter" ? createNewCard(e) : null}}
+        className={cardTitle.length < 3 ? "focus-visible:outline-red-500" :"focus-visible:outline-white"}
+        autoFocus 
+        placeholder="Enter card title..."
       />
-      <Button type="submit">Add Card</Button>
-    </form>
-  </Form>
+      <Button 
+        onClick={createNewCard}
+        className="bg-blue-600 hover:bg-blue-500"
+      >
+        Add Card
+      </Button>
+    </div>
   )
 };
 

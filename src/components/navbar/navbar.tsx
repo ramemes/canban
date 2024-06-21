@@ -1,3 +1,4 @@
+
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Poppins } from "next/font/google";
@@ -16,7 +17,7 @@ export const NavBar = () => {
       <Link href="/dashboard">
         <div className="flex items-center justify-center gap-x-2 w-44">
           <Image
-            src="./logo.svg"
+            src="/logo.svg"
             width={50}
             height={50}
             alt="logo"

@@ -25,7 +25,7 @@ export const CardList = ({
   }
 
   return (
-    <div className="flex flex-col gap-y-2">
+    <div className="flex flex-col gap-y-2 bg-fuc">
       {cards.map((card) => (
         <Card
           key={card._id}

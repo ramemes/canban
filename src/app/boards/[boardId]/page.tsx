@@ -4,7 +4,6 @@ import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
 import { Loader } from "lucide-react";
-import { ListCard } from "./_components/list-card.tsx";
 import { BoardNav } from "./_components/board-nav";
 import { ListList } from "./_components/list-list";
 
@@ -36,7 +35,7 @@ const BoardIdPage = ({
   }
 
   return (
-    <div className="flex w-full flex-col bg-blue-200 overflow-x-hidden">
+    <div className="flex w-full flex-col bg-gradient-to-b from-fuchsia-500 to-teal-500  overflow-x-hidden">
       <BoardNav
         title={board.title}
       />

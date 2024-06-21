@@ -10,7 +10,7 @@ export const Header = ({
   title
 }: HeaderProps) => {
   return (
-    <div className={cn("text-white font-sans")}>
+    <div className="text-white font-sans p-1">
       {title}
     </div>
   )

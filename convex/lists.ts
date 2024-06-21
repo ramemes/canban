@@ -20,9 +20,9 @@ export const getLists = query({
       .order("desc")
       .collect()
     
-    // const orderedLists = lists.sort((a,b) => b.index - a.index)
+    const orderedLists = lists.sort((a,b) => a.index - b.index)
 
-    return lists
+    return orderedLists
   }
 })
 

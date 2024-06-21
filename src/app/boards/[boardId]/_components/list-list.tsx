@@ -31,7 +31,6 @@ export const ListList = ({
         ))
         }
         <NewListButton
-          // listsLength={lists ? lists.length : 0}
           boardId={boardId}
         />
     </div>

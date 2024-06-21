@@ -19,9 +19,7 @@ export const ListCard = ({
 }: ListCardProps) => {
   return (
     <div 
-      className={cn("flex flex-col bg-blue-500 h-fit min-w-64 p-3  gap-y-3 rounded-xl",
-        `bg-gray-800`
-      )}
+      className="flex flex-col bg-gradient-to-tr from-slate-600 to-slate-800 h-fit min-w-72 p-3  gap-y-3 rounded-xl"
     >
       <Header
         title={title}
