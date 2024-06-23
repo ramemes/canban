@@ -45,13 +45,13 @@ export const BoardNav = ({
   }
 
   return (
-    <div className="bg-black bg-opacity-45 p-3 z-[2]">
+    <div className="bg-black bg-opacity-15 p-3 px-4 z-[2]">
       <form>
         <Dialog open={renameOpen} onOpenChange={setRenameOpen}>
           <DialogTrigger asChild>
             <div 
               onClick={() => setTitleInput(title)}
-              className="w-fit p-1 hover:bg-gray-500 hover:cursor-pointer rounded-md text-white font-semibold "
+              className="w-fit p-1 hover:bg-gray-400 hover:bg-opacity-40 hover:cursor-pointer rounded-md  font-semibold "
             >
               {title}
             </div>

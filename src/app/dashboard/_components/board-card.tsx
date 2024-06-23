@@ -23,9 +23,9 @@ export const BoardCard = ({
             src={image}
             alt={title}
             fill
-            className="z-[0] rounded-md hover:opacity-75 "
+            className="z-[0] rounded-md opacity-85 hover:opacity-70"
           />
-          <p className="z-[1] font-semibold bg-gray-700 bg-opacity-50 rounded-lg p-1 px-2 h-fit outline-2 outline outline-white">
+          <p className="z-[1] font-bold text-[17px] bg-opacity-20 rounded-lg p-1 px-2 h-fit bg-gray-900">
             {title}
           </p>
         </div>

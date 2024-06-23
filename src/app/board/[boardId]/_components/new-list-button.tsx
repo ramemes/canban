@@ -29,7 +29,7 @@ export const NewListButton = ({
         :
           <Button 
             onClick={() => setAddingList(!addingList)}
-            className="w-80 h-fit p-3 rounded-lg bg-gray-800 bg-opacity-90 hover:bg-opacity-60" 
+            className="w-80 h-fit p-3 rounded-lg bg-gray-800 text-white bg-opacity-90 hover:bg-opacity-60" 
             variant="list"
           >
             <Plus className="mx-1 w-5"/> Add another list

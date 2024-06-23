@@ -36,7 +36,7 @@ const BoardIdPage = ({
   }
 
   return (
-    <div className="flex w-full flex-col bg-gradient-to-b from-fuchsia-500 to-teal-500  overflow-x-hidden">
+    <div className="z-[1] flex  w-full flex-col  overflow-x-hidden">
 
       <BoardNav
         boardId={board._id}

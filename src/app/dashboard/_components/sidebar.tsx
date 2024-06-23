@@ -10,7 +10,7 @@ export const SideBar = () => {
   const searchParams = useSearchParams()
   const favorites = searchParams.get("favorites")
   return (
-    <div className="z-[2] left-0 h-full w-52 flex pt-6 p-5 flex-col gap-y-2">
+    <div className="z-[0] left-0 h-full min-w-56 flex pt-6 p-3 pl-5 flex-col gap-y-2  border-r-2">
       <Button 
         variant={favorites ? "ghost" : null}
         asChild
@@ -27,7 +27,7 @@ export const SideBar = () => {
 
       </Button>
 
-      <Button 
+      {/* <Button 
         variant={!favorites ? "ghost" : null}
         asChild
         size="lg"
@@ -40,7 +40,7 @@ export const SideBar = () => {
           <Star className="h-4 w-5 mr-2"/>
           Favorites
         </Link>
-      </Button>
+      </Button> */}
       
     </div>
   )

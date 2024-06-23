@@ -17,7 +17,7 @@ export const getCards = query({
         q
           .eq("listId", args.listId)
       )
-      .order("desc")
+      .order("asc")
       .collect()
     
 

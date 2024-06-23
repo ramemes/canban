@@ -7,7 +7,7 @@ const DashboardPage = () => {
   const { user } = useUser()
 
   return (
-    <div className="flex-1 h-[calc(100%-65px)] p-6">
+    <div className="flex-1 w-full h-[calc(100%-65px)] p-6">
       {!user ? "User not found" 
       :
         <BoardList

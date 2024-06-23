@@ -19,7 +19,7 @@ export const ListList = ({
 
 
   return (
-    <div className="flex flex-row p-8 gap-x-4 h-full w-full overflow-x-scroll z-[1]">
+    <div className="flex flex-row p-8 gap-x-4 h-full overflow-x-auto z-[1]">
         {lists?.map((list) => (
           <ListCard 
             key={list._id}
