@@ -31,7 +31,7 @@ export const NewBoardButton = ({
     .then((board) => {
       toast.success("Board created");
       console.log(board)
-      router.push(`/boards/${board}`)
+      router.push(`/board/${board}`)
     })
     .catch(() => toast.error("Failed to create board"))
   }

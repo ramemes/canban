@@ -148,3 +148,25 @@ export const get = query({
     return board
   }
 })
+
+export const editBoardTitle = mutation({
+  args: {
+    boardId: v.id("boards"),
+    title: v.string(),
+  },
+
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Unauthorized");
+    }
+
+    
+    const updatedBoard = await ctx.db.patch(args.boardId, {
+      title: args.title
+    })
+
+    return updatedBoard
+  }
+})
