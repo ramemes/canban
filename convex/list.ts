@@ -51,3 +51,24 @@ export const reorderList = mutation({
   }
 })
 
+export const editListTitle = mutation({
+  args: {
+    listId: v.id("lists"),
+    title: v.string(),
+  },
+
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Unauthorized");
+    }
+
+    
+    const updatedList = await ctx.db.patch(args.listId, {
+      title: args.title
+    })
+
+    return updatedList
+  }
+})

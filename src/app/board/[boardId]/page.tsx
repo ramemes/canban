@@ -6,7 +6,6 @@ import { Id } from "../../../../convex/_generated/dataModel";
 import { Loader } from "lucide-react";
 import { BoardNav } from "./_components/board-nav";
 import { ListList } from "./_components/list-list";
-import Image from "next/image";
 
 interface BoardIdPageProps {
   params: {
@@ -36,7 +35,7 @@ const BoardIdPage = ({
   }
 
   return (
-    <div className="z-[1] flex  w-full flex-col  overflow-x-hidden">
+    <div className="z-[1] flex w-full flex-col overflow-x-hidden">
 
       <BoardNav
         boardId={board._id}

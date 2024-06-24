@@ -25,3 +25,20 @@ export const createCard = mutation({
     return card
   }
 })
+
+export const deleteCard = mutation({
+  args: {
+    cardId: v.id("cards"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Unauthorized")
+    }
+
+    const card = await ctx.db.delete(args.cardId)
+
+    return card
+  }
+})

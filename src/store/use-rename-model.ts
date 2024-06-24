@@ -13,7 +13,7 @@ export const useRenameModal = create<IRenameModal>((set) => ({
   isOpen: false,
   onOpen: (id, title) => set({
     isOpen: true,
-    initialValues: {id, title },
+    initialValues: { id, title },
   }),
   onClose: () => set({
     isOpen: false,

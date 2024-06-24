@@ -6,7 +6,7 @@ export const BoardPageLayout = ({
   children 
 }: {children: React.ReactNode}) => {
   return (
-    <main className="flex flex-col h-full ">
+    <main className="flex flex-col h-full">
       <NavBar/>
       <div className="flex flex-row h-full">
         <SideBar/>

@@ -10,7 +10,7 @@ export const SideBar = () => {
   const searchParams = useSearchParams()
   const favorites = searchParams.get("favorites")
   return (
-    <div className="z-[0] left-0 h-full min-w-56 flex pt-6 p-3 pl-5 flex-col gap-y-2  border-r-2">
+    <div className="z-[0] left-0 h-full min-w-56 flex pt-6 p-3 pl-5 flex-col gap-y-2  mr-3">
       <Button 
         variant={favorites ? "ghost" : null}
         asChild

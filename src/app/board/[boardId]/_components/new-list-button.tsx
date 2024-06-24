@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useApiMutation } from "../../../../../hooks/useApiMutation";
+import { useApiMutation } from "../../../../hooks/useApiMutation";
 import { api } from "../../../../../convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";

@@ -151,7 +151,7 @@ export const get = query({
 
 export const editBoardTitle = mutation({
   args: {
-    boardId: v.id("boards"),
+    id: v.id("boards"),
     title: v.string(),
   },
 
@@ -163,10 +163,65 @@ export const editBoardTitle = mutation({
     }
 
     
-    const updatedBoard = await ctx.db.patch(args.boardId, {
+    const updatedBoard = await ctx.db.patch(args.id, {
       title: args.title
     })
 
     return updatedBoard
+  }
+})
+
+export const deleteBoard = mutation({
+  args: {
+    id: v.id("boards")
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Unauthorized");
+    }
+
+    const board = await ctx.db.get(args.id)
+
+    if (!board) {
+      throw new Error("Board not found")
+    }
+
+    if (identity.subject !== board.authorId) {
+      throw new Error("Unauthorized")
+    }
+
+    return await ctx.db.delete(args.id)
+
+    // const lists = await ctx.db.query("lists")
+    //   .withIndex("by_board", (q) => 
+    //     q
+    //       .eq("boardId", args.boardId)
+    //   )
+    //   .order("desc")
+    //   .collect()
+
+    // const cardsPromises = lists.map((list) => {
+    //   return new Promise(async (resolve: any) => {
+    //     await ctx.db.query("cards")
+    //       .withIndex("by_list", (q) => 
+    //         q
+    //           .eq("listId", list._id)
+    //       )
+    //       .order("asc")
+    //       .collect()
+    //     resolve()
+    //   })
+    // })
+
+    // const cardsList = await Promise.all(cardsPromises)
+
+    // const deleteCardsPromises = cardsList.map((cards) => {
+
+    // })
+    
+
+    return board
   }
 })

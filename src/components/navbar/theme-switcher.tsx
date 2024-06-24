@@ -10,7 +10,7 @@ export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme()
   return (
     <div 
-      className="flex items-center justify-center p-1 rounded-md hover:cursor-pointer hover:bg-gray-400 hover:bg-opacity-50"
+      className="flex items-center justify-center p-1 rounded-md hover:cursor-pointer hover:bg-gray-400 hover:bg-opacity-50 transition duration-200"
       onClick={() => {theme !== "light" ? setTheme("light") : setTheme("dark"), console.log(theme)}}
     >
         <div className="flex items-center justify-center w-6 ">
