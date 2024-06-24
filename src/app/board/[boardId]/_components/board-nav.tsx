@@ -45,7 +45,7 @@ export const BoardNav = ({
       
     >
       <div 
-        onClick={() => onOpen(boardId, title)}
+        onClick={() => onOpen(boardId, title, "boards")}
         className="w-fit p-2 hover:bg-gray-400 hover:bg-opacity-40 hover:cursor-pointer rounded-md  font-semibold text-2xl"
       >
         {title}

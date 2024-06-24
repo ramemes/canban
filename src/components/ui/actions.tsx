@@ -67,7 +67,7 @@ export const Actions = ({
 
         >
           <DropdownMenuItem 
-            onClick={() => onOpen(id, title)}
+            onClick={() => onOpen(id, title, "boards")}
             className="cursor-pointer hover:bg-gray-400 p-2" 
           >
             <Pencil className="mr-2 h-4 w-4" />

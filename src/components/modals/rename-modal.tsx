@@ -20,11 +20,10 @@ import { useApiMutation } from "@/hooks/useApiMutation";
 import { api } from "../../../convex/_generated/api";
 import { toast } from "sonner";
 
+
+
 export const RenameModal = () => {
-  const { 
-    mutate, 
-    pending 
-  } = useApiMutation(api.board.editBoardTitle);
+
 
   const {
     isOpen,
@@ -32,7 +31,19 @@ export const RenameModal = () => {
     initialValues,
   } = useRenameModal();
 
+
+
+  const { 
+    mutate, 
+    pending 
+  } = initialValues.table === "boards" ? 
+    useApiMutation(api.board.editBoardTitle) 
+    : initialValues.table === "lists" ? 
+    useApiMutation(api.list.editListTitle)
+    : useApiMutation(api.board.editBoardTitle) 
+
   const [title, setTitle] = useState(initialValues.title);
+  const [table, setTable] = useState(initialValues.table)
 
   useEffect(() => {
     setTitle(initialValues.title);
@@ -43,17 +54,16 @@ export const RenameModal = () => {
   const editTitle: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
 
-    // if (initialValues.title === title) return;
 
     mutate({
       id: initialValues.id, 
       title
     })
     .then(() => {
-      toast.success("Board renamed")
+      // toast.success(`${initialValues.table.slice(0,1).toUpperCase()}${initialValues.table.slice(1,-1)} renamed`)
       onClose()
     })
-    .catch(() => toast.error("Unable to change board title"))
+    // .catch(() => toast.error(`Unable to change ${initialValues.table.slice(0,-1)} title`))
   }
 
   return (
@@ -63,7 +73,7 @@ export const RenameModal = () => {
         <AlertDialogHeader>
           <AlertDialogTitle>Edit Title</AlertDialogTitle>
           <AlertDialogDescription>
-            Enter a new title for your board
+            Enter a new title for your {table.slice(0,-1)}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <form onSubmit={editTitle} className="space-y-4">
@@ -73,7 +83,7 @@ export const RenameModal = () => {
               required
               maxLength={60}
               id="name"
-              placeholder="Board title"
+              // placeholder={`${initialValues.table.slice(0,1).toUpperCase()}${initialValues.table.slice(1,-1)} title`}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />

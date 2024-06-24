@@ -11,6 +11,8 @@ import { toast } from "sonner";
 import { AlertDialogAction, AlertDialogFooter, AlertDialogHeader, AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogTitle, AlertDialogTrigger  } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRenameModal } from "@/store/use-rename-model";
+import { ConfirmModal } from "@/components/ui/confirm-modal";
 
 interface HeaderProps  {
   title: string;
@@ -22,20 +24,20 @@ export const Header = ({
   listId
 }: HeaderProps) => {
 
-  const { user } = useUser()
-  const { mutate, pending } = useApiMutation(api.list.editListTitle)
-
-  const [titleInput, setTitleInput] = useState(title)
+  
+  const { onOpen } = useRenameModal();
+  const { mutate, pending } = useApiMutation(api.list.deleteList)
 
   
-  const editTitle = () => {
-    if (!user) return;
-    if (titleInput === title) return;
+  
+  const onDelete = () => {
     mutate({
-      listId: listId, 
-      title: titleInput
+      id: listId,
     })
-    .catch(() => toast.error("Unable to change board title"))
+    .then(() => {
+      toast.success("List deleted");
+    })
+    .catch(() => toast.error("Failed to delete list"))
   }
 
   return (
@@ -48,7 +50,8 @@ export const Header = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuItem 
-            className="hover:cursor-pointer hover:bg-gray-400" 
+            className="hover:cursor-pointer hover:bg-gray-400"
+            onClick={() => onOpen(listId, title, "lists")} 
           >
             <Pencil className="mr-2 h-4 w-4" />
             <span>Rename</span>
@@ -57,11 +60,20 @@ export const Header = ({
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem className="hover:cursor-pointer hover:bg-red-400 ">
-            <Trash className="mr-2 h-4 w-4" />
-            <span>Delete</span>
-          </DropdownMenuItem>
-  
+          <ConfirmModal
+            header="Delete board?"
+            description="This will delete the board and all of its contents."
+            disabled={pending}
+            onConfirm={onDelete}
+          >
+            <Button
+              variant="ghost"
+              className="p-3 cursor-pointer text-sm w-full justify-start font-normal" 
+            >
+              <Trash className="h-4 w-4 mr-2"/>
+              Delete
+            </Button>
+          </ConfirmModal>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

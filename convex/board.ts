@@ -222,6 +222,6 @@ export const deleteBoard = mutation({
     // })
     
 
-    return board
+    // return board
   }
 })
