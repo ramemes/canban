@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 
 import { RenameModal } from "@/components/modals/rename-modal";
+import { CardModal } from "@/components/modals/card-modal";
+
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false)
@@ -19,6 +21,7 @@ export const ModalProvider = () => {
   return (
     <>
       <RenameModal />
+      <CardModal />
     </>
   )
 }

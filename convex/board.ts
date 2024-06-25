@@ -182,46 +182,38 @@ export const deleteBoard = mutation({
       throw new Error("Unauthorized");
     }
 
-    const board = await ctx.db.get(args.id)
+    const board = await ctx.db.get(args.id);
 
     if (!board) {
-      throw new Error("Board not found")
+      throw new Error("Board not found");
     }
 
     if (identity.subject !== board.authorId) {
-      throw new Error("Unauthorized")
+      throw new Error("Unauthorized");
     }
 
-    return await ctx.db.delete(args.id)
+    const lists = await ctx.db.query("lists")
+      .withIndex("by_board", (q) => 
+        q.eq("boardId", args.id)
+      )
+      .order("desc")
+      .collect();
 
-    // const lists = await ctx.db.query("lists")
-    //   .withIndex("by_board", (q) => 
-    //     q
-    //       .eq("boardId", args.boardId)
-    //   )
-    //   .order("desc")
-    //   .collect()
+    for (const list of lists) {
+      const cards = await ctx.db.query("cards")
+        .withIndex("by_list", (q) => 
+          q.eq("listId", list._id)
+        )
+        .order("asc")
+        .collect();
 
-    // const cardsPromises = lists.map((list) => {
-    //   return new Promise(async (resolve: any) => {
-    //     await ctx.db.query("cards")
-    //       .withIndex("by_list", (q) => 
-    //         q
-    //           .eq("listId", list._id)
-    //       )
-    //       .order("asc")
-    //       .collect()
-    //     resolve()
-    //   })
-    // })
+      const deleteCardsPromises = cards.map(card => ctx.db.delete(card._id));
+      await Promise.all(deleteCardsPromises);
 
-    // const cardsList = await Promise.all(cardsPromises)
+      await ctx.db.delete(list._id);
+    }
 
-    // const deleteCardsPromises = cardsList.map((cards) => {
+    return await ctx.db.delete(args.id);
 
-    // })
-    
-
-    // return board
   }
-})
+});

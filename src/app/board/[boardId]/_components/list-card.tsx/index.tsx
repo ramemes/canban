@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { CardList } from "../card-list";
 import { Footer } from "./footer";
 import { Header } from "./header";

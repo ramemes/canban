@@ -16,7 +16,7 @@ import {
   AlertDialogTitle, 
   AlertDialogTrigger  
 } from "@/components/ui/alert-dialog";
-import { useRenameModal } from "@/store/use-rename-model";
+import { useRenameModal } from "@/store/use-rename-modal";
  
 interface BoardNavProps {
   title: string;
@@ -41,11 +41,11 @@ export const BoardNav = ({
   return (
 
     <div 
-      className="px-7 p-3 z-[0] text-xl bg-black bg-opacity-30"
+      className="flex items-center text-white pl-4 h-20 z-[0] text-xl bg-black bg-opacity-30"
       
     >
       <div 
-        onClick={() => onOpen(boardId, title, "boards")}
+        onClick={() => onOpen(boardId, title)}
         className="w-fit p-2 hover:bg-gray-400 hover:bg-opacity-40 hover:cursor-pointer rounded-md  font-semibold text-2xl"
       >
         {title}

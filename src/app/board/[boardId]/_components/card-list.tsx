@@ -32,6 +32,7 @@ export const CardList = ({
           id={card._id}
           title={card.title}
           description={card.description}
+          color={card.color}
         />
       ))}
     </div>

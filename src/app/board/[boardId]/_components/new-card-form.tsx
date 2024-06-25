@@ -20,7 +20,7 @@ interface NewCardFormProps {
 }
 
 
-const newCardColor = "000000"
+// const newCardColor = "000000"
 
 
 export const NewCardForm = ({
@@ -47,7 +47,7 @@ export const NewCardForm = ({
     mutate({
       listId,
       title: cardTitle,
-      color:  newCardColor,
+      // color:  newCardColor,
       description: ""   
     })
 

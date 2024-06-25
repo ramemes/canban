@@ -64,7 +64,6 @@ export const editListTitle = mutation({
       throw new Error("Unauthorized");
     }
 
-    
     const updatedList = await ctx.db.patch(args.id, {
       title: args.title
     })
@@ -84,7 +83,16 @@ export const deleteList = mutation({
       throw new Error("Unauthorized");
     }
 
-    return await ctx.db.delete(args.id)
+    const cards = await ctx.db.query("cards")
+    .withIndex("by_list", (q) => 
+      q.eq("listId", args.id)
+    )
+    .order("asc")
+    .collect();
 
+    const deleteCardsPromises = cards.map(card => ctx.db.delete(card._id));
+    await Promise.all(deleteCardsPromises);
+
+    return await ctx.db.delete(args.id);
   }
 })

@@ -14,7 +14,7 @@ const font = Poppins({
 
 export const NavBar = () => {
   return (
-    <div className="z-[1] flex items-center justify-between gap-x-12 p-3 w-full h-[70px] shadow-zinc-300 shadow-sm">
+    <div className="z-[1] flex items-center justify-between pl-6 gap-x-16 p-3 w-full h-[70px] shadow-zinc-300 border-b">
       <Link href="/dashboard">
         <div className="flex items-center justify-center gap-x-2 w-44 ml-3">
           <Image
@@ -30,8 +30,8 @@ export const NavBar = () => {
           </span>
         </div>
       </Link>
-
       <SearchInput/>
+      
       <div className="flex items-center gap-x-5 pr-1">
         <ThemeSwitcher/>
         <UserButton/>

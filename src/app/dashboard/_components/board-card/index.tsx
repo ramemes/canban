@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "./footer";
 // import { Overlay } from "./overlay";
-import { Actions } from "@/components/ui/actions";
+import { BoardCardActions } from "./board-card-actions";
 import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -34,12 +34,11 @@ export const BoardCard = ({
             fill
             className="object-fit"
           />
-
-          <Actions
-
+          <BoardCardActions
             id={id}
             title={title}
             side="right"
+            tableType="boards"
           > 
             <button
               className="absolute top-1 right-1  
@@ -51,7 +50,7 @@ export const BoardCard = ({
               />
             </button>    
 
-          </Actions> 
+          </BoardCardActions> 
         </div>
         <Footer title={title}/>
       </div>

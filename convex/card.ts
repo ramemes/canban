@@ -6,7 +6,7 @@ export const createCard = mutation({
     listId: v.id("lists"),
     title: v.string(),
     description: v.string(),
-    color: v.string(),
+    color: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -15,11 +15,13 @@ export const createCard = mutation({
       throw new Error("Unauthorized")
     }
 
+    const defaultColor = "000000"
+
     const card = await ctx.db.insert("cards", {
       listId: args.listId,
       title: args.title,
       description: args.description,
-      color: args.color,
+      color: defaultColor,
     })
 
     return card
@@ -37,8 +39,6 @@ export const deleteCard = mutation({
       throw new Error("Unauthorized")
     }
 
-    const card = await ctx.db.delete(args.cardId)
-
-    return card
+    return await ctx.db.delete(args.cardId)
   }
 })
