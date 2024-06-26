@@ -1,5 +1,5 @@
 import { SideBar } from "@/app/dashboard/_components/sidebar";
-import { NavBar } from "@/components/navbar/navbar";
+import { BoardNavBar } from "./board-nav-bar";
 
 
 export const BoardPageLayout = ({
@@ -7,7 +7,7 @@ export const BoardPageLayout = ({
 }: {children: React.ReactNode}) => {
   return (
     <main className="flex flex-col h-full">
-      <NavBar/>
+      <BoardNavBar/>
       <div className="flex flex-row h-full">
         <SideBar/>
         {children}

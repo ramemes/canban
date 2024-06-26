@@ -17,7 +17,7 @@ export const SearchInput = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
   }
-
+  
   useEffect(() => {
     const url = queryString.stringifyUrl({
       url: "/dashboard",
@@ -25,6 +25,11 @@ export const SearchInput = () => {
         search: debouncedValue,
       },
     },{ skipEmptyString: true, skipNull: true});
+    // if (debouncedValue) {
+    //   router.push(`?search=${debouncedValue}`)
+    // } else {
+    //   router.push("/dashboard")
+    // }
     router.push(url)
   }, [debouncedValue, router])
 
