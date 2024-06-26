@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRenameModal } from "@/store/use-rename-modal";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
+import { RenameInput } from "@/components/ui/rename-input";
 
 interface HeaderProps  {
   title: string;
@@ -38,17 +39,17 @@ export const Header = ({
   const { mutate: renameList, pending: renameListPending } = useApiMutation(api.list.editListTitle)
 
 
-  const [titleEditing, setTitleEditing] = useState(false)
-  const [titleValue, setTitleValue] = useState(title)
+  // const [titleEditing, setTitleEditing] = useState(false)
+  // const [titleValue, setTitleValue] = useState(title)
 
-  const changeTitle = (e: any) => {
-    renameList({
-      id: listId,
-      title: titleValue
-    })
-    .catch(() => toast.error("Failed to rename list"))
-    .finally(() => setTitleEditing(false))
-  }
+  // const changeTitle = () => {
+  //   renameList({
+  //     id: listId,
+  //     title: titleValue
+  //   })
+  //   .catch(() => toast.error("Failed to rename list"))
+  //   .finally(() => setTitleEditing(false))
+  // }
   
   const onDelete = () => {
     deleteList({
@@ -62,25 +63,14 @@ export const Header = ({
 
   return (
     <div className="flex items-center justify-between gap-x-1 text-white font-sans p-1"> 
-      {
-        titleEditing ? 
-          <input 
-            value={titleValue}
-            onChange={(e) => setTitleValue(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" ? changeTitle(e) : null}
-            className="w-full bg-transparent text-white px-3 p-1 outline-2 outline outline-white rounded-md"
-            autoFocus
-            onBlur={changeTitle}
-          />
-        :
-        <div 
-          onClick={() => setTitleEditing(true)}
-          className="w-full px-3 p-1 hover:bg-gray-400 hover:bg-opacity-40 hover:cursor-pointer rounded-md"
-        >
-          {title}
-        </div> 
 
-      } 
+      <RenameInput
+        id={listId}
+        title={title}
+        renameFunction={renameList}
+        dataType="list"
+        className="w-fit  text-white font-sans "
+      />
 
 
       <DropdownMenu>

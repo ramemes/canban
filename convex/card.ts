@@ -28,9 +28,42 @@ export const createCard = mutation({
   }
 })
 
+export const editCard = mutation({
+  args: {
+    id: v.id("cards"),
+    title: v.optional(v.string()),
+    description: v.optional(v.string()),
+  },
+
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Unauthorized");
+    }
+     
+    const patchObj: any = {}
+
+ 
+    if (args.title) {
+      patchObj.title = args.title
+    }
+    if (args.description) {
+      patchObj.description = args.description
+    }
+    
+
+    const editedCard = await ctx.db.patch(args.id, {
+      ...patchObj
+    })
+
+    return editedCard
+  }
+})
+
 export const deleteCard = mutation({
   args: {
-    cardId: v.id("cards"),
+    id: v.id("cards"),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -39,6 +72,9 @@ export const deleteCard = mutation({
       throw new Error("Unauthorized")
     }
 
-    return await ctx.db.delete(args.cardId)
+
+    const card = await ctx.db.delete(args.id)
+
+    return card
   }
 })

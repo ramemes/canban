@@ -48,7 +48,7 @@ export const NewCardForm = ({
       listId,
       title: cardTitle,
       // color:  newCardColor,
-      description: ""   
+      description: "description here"   
     })
 
     .catch(() => toast.error("Failed to create card"))
@@ -73,6 +73,7 @@ export const NewCardForm = ({
         onClick={createNewCard}
         className="bg-blue-600 hover:bg-blue-500"
       >
+
         Add Card
       </Button>
     </div>
