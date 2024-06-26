@@ -4,19 +4,24 @@ import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { BoardCard } from "./board-card";
 import { NewBoardButton } from "./new-board-button";
+import { EmptySearch } from "./empty-search";
 
 interface BoardListProps {
   authorId: string;
-
+  query: {
+    search?: string;
+  };
 }
 
 
 export const BoardList = ({
   authorId,
+  query
 }: BoardListProps) => {
 
   const data = useQuery(api.boards.getUserBoards, {
-    authorId: authorId
+    authorId: authorId,
+    ...query
   })
   
 
@@ -25,7 +30,19 @@ export const BoardList = ({
     // return BoardCard.Skeleton
   }
 
+  if (!data?.length && query.search) {
+    return (
+      <EmptySearch/>
+    )
+  }
+  
+  // if (!data?.length) {
+  //   return (
+  //     <EmptyBoards/>
+  //   )
+  // }
 
+  
   return (
     <div>
       <h2 className="text-2xl font-semibold">Your Boards</h2>

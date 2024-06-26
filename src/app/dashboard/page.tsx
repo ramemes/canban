@@ -3,7 +3,17 @@
 import { SignOutButton, UserButton, useUser } from "@clerk/nextjs";
 import { BoardList } from "./_components/board-list";
 
-const DashboardPage = () => {
+interface DashboardPageProps {
+  searchParams: {
+    search?: string;
+  }
+}
+
+
+
+const DashboardPage = ({
+  searchParams,
+}:DashboardPageProps) => {
   const { user } = useUser()
 
   return (
@@ -12,6 +22,7 @@ const DashboardPage = () => {
       :
         <BoardList
           authorId={user.id}
+          query={searchParams}
         />
       }
 

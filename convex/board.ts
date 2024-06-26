@@ -161,6 +161,9 @@ export const editBoardTitle = mutation({
     if (!identity) {
       throw new Error("Unauthorized");
     }
+    // if (!args.title.length || args.title.length > 40) {
+    //   throw new Error("Title must be between 0 and 40 characters")
+    // }
 
     
     const updatedBoard = await ctx.db.patch(args.id, {

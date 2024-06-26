@@ -6,6 +6,7 @@ import { v } from "convex/values";
 export const getUserBoards = query({
   args: {
     authorId: v.string(),
+    search: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -14,16 +15,31 @@ export const getUserBoards = query({
       throw new Error("Unauthorized");
     }
 
+    const title = args.search as string;
+    let boards = []
 
-
-    const boards = await ctx.db
+    if (title) {
+      boards = await ctx.db
       .query("boards")
-      .withIndex("by_author_id", (q) =>
+      .withSearchIndex("search_title", (q) => 
         q
+          .search("title", title)
           .eq("authorId", args.authorId)
       )
-    .order("desc")
-    .collect();
+      .collect();
+
+    } else {
+        boards = await ctx.db
+        .query("boards")
+        .withIndex("by_author_id", (q) =>
+          q
+            .eq("authorId", args.authorId)
+        )
+        .order("desc")
+        .collect();
+    }
+
+
 
     return boards
   }

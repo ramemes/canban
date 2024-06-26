@@ -45,6 +45,10 @@ export const RenameModal = () => {
 
   const editTitle: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
+    if (!title.length || title.length > 40) {
+      toast.error("Title must be between 0 and 40 characters")
+      return;
+    }
 
     mutate({
       id: initialValues.id, 
@@ -54,7 +58,9 @@ export const RenameModal = () => {
       // toast.success(`${initialValues.table.slice(0,1).toUpperCase()}${initialValues.table.slice(1,-1)} renamed`)
       onClose()
     })
-    // .catch(() => toast.error(`Unable to change ${initialValues.table.slice(0,-1)} title`))
+    .catch((err) => {
+      toast.error(err)
+    })
   }
 
   return (
