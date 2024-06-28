@@ -21,13 +21,18 @@ export const BoardCard = ({
   id,
 }: BoardCardProps) => {
 
+  const [showActions, setShowActions] = useState(false)
 
   return (
     <Link href={`/board/${id}`}>
       <div 
-        className="flex relative flex-col overflow-hidden rounded-lg justify-center outline-1 aspect-[900/750] outline-gray-200 outline"
+        className="flex relative flex-col overflow-hidden rounded-lg justify-center outline-1 aspect-[900/750] outline-gray-200 outline "
       >
-        <div className="flex relative flex-col aspect-[900/600] overflow-hidden rounded-t-md  hover:opacity-80 transition-opacity bg-black">
+        <div 
+          className="flex relative flex-col aspect-[900/600] overflow-hidden rounded-t-md transition-opacity hover:opacity-80"
+          onMouseEnter={() => setShowActions(true)}
+          onMouseLeave={() => setShowActions(false)}
+        >
           <Image
             src={image}
             alt={title}
@@ -41,12 +46,12 @@ export const BoardCard = ({
             tableType="boards"
           > 
             <button
-              className="absolute top-1 right-1  
+              className={cn(`absolute top-1 right-1  
                 transition-opacity px-3
-              py-2 outline-none"
+                py-2 outline-none `)}
             >
               <MoreHorizontal
-                className="text-white text-border-white  transition-opacity"
+                className={cn(`w-7 h-7 text-white opacity-80 hover:opacity-100 transition-opacity`, !showActions && "hidden")}
               />
             </button>    
 

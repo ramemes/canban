@@ -24,17 +24,17 @@ export const RenameInput = ({
   
 
   const changeTitle = () => {
-    // if (titleValue.length === 0 || titleValue === title) {
-    //   setTitleEditing(false)
-    //   return;
-    // }
+    if (titleValue.length === 0 || titleValue === title) {
+      setTitleEditing(false)
+      return;
+    }
     
-    // renameFunction({
-    //   id: id,
-    //   title: titleValue
-    // })
-    // .catch(() => toast.error(`Failed to rename ${dataType}`))
-    // .finally(() => setTitleEditing(false))
+    renameFunction({
+      id: id,
+      title: titleValue
+    })
+    .catch(() => toast.error(`Failed to rename ${dataType}`))
+    .finally(() => setTitleEditing(false))
   }
 
   return (

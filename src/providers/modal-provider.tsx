@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { RenameModal } from "@/components/modals/rename-modal";
 import { CardModal } from "@/components/modals/card-modal";
-
+import { NewBoardModal } from "@/components/modals/new-board-modal/new-board-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false)
@@ -22,6 +22,7 @@ export const ModalProvider = () => {
     <>
       <RenameModal />
       <CardModal />
+      <NewBoardModal />
     </>
   )
 }

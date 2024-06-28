@@ -10,12 +10,9 @@ export const createBoard = mutation({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
 
-
     if (!identity || identity.subject !== args.authorId) {
       throw new Error("Unauthorized");
     }
-
-    
 
     const board = await ctx.db.insert("boards", {
       title: args.title,
