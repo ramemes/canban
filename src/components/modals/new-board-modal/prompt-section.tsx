@@ -6,11 +6,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import axios from "axios";
 
 import { useApiMutation } from "@/hooks/useApiMutation";
-import { useCardModal } from "@/store/use-card-modal";
-import { useState } from "react";
+
 import { api } from "../../../../convex/_generated/api";
 import { useNewBoardModal } from "@/store/use-new-board-modal";
 import { Input } from "../../ui/input";
@@ -21,6 +21,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import { useState } from "react";
 
 // interface NewBoardPromptModalProps {
 //   setAddingPrompt: (x: boolean) => void;
@@ -31,34 +33,50 @@ export const PromptSection = () => {
 
   const {
     onOpen,
+    onClose,
     id,
+    title,
     prompt,
     updatePrompt,
     setAddingPrompt
   } = useNewBoardModal()
   
   const { mutate, pending } = useApiMutation(api.board.createBoard)
+  const [apiPending, setApiPending] = useState(false)
+
+  const createBoard = async () => {
+    try {
+      setApiPending(true)
+      const randomImage = imgFromPublic()
+      const userMessage: ChatCompletionMessageParam = {
+        role: "user",
+        content: prompt
+      };
+      const response = await axios.post("/api/board", {
+        messages: [userMessage],
+      });
+      // console.log(response.data.content)
+      mutate({
+        authorId: id,
+        title,
+        response: response.data.content,
+        imageUrl: randomImage
+      })
+      .then((board) => {
+        toast.success("Board created");
+        router.push(`/board/${board}`)
+        onClose()
+      })
+      .catch(() => toast.error("Failed to create board"))
+
+    } catch (error: any) {
+      console.log(error)
+    } finally {
+      setApiPending(false)
+    }
+  }
 
 
-  // const createBoard = () => {
-  //   const randomImage = imgFromPublic()
-    
-  //   mutate({
-  //     authorId: id,
-  //     title,
-  //     imageUrl: randomImage
-  //   })
-  //   .then((board) => {
-  //     toast.success("Board created");
-  //     router.push(`/board/${board}`)
-  //     onClose()
-  //   })
-  //   .catch(() => toast.error("Failed to create board"))
-  // }
-
-  // const goBack = () => {
-  //   onOpenBoardModal(id)
-  // }
 
   
 
@@ -79,7 +97,7 @@ export const PromptSection = () => {
             </Label>
             <Textarea
               id="title"
-              defaultValue={prompt}
+              // defaultValue={prompt}
               value={prompt}
               onChange={(e) => updatePrompt(e.target.value)}
               // onKeyDown={(e) => e.key === "Enter" ? createBoard() : null}
@@ -93,12 +111,15 @@ export const PromptSection = () => {
             className="w-full flex flex-col items-center justify-center gap-y-2"
           >
             <Button 
-              disabled={pending || prompt.length < 5}
+              disabled={pending || prompt.length < 5 || apiPending}
               type="submit"
               onClick={() => {}}
               className="card-wrapper text-white w-full "
             >
-              <div className="card-content flex items-center justify-center w-full ">
+              <div 
+                className="card-content flex items-center justify-center w-full "
+                onClick={createBoard}
+              >
                 Create
               </div>                        
             </Button>

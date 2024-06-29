@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { OpenAI,  } from "openai";
+import { OpenAI  } from "openai";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
 
@@ -11,7 +11,34 @@ const openai = new OpenAI({
 
 const instructionMessage: ChatCompletionMessageParam = {
   role: "system",
-  content: "You are an accurate and skilled kanban board list and ticket creator. The user tells you what their board is for and what they want organised. You split it into lists and then you split each list into tickets. This means that you give steps the user needs to complete their project/task and then substeps for each step. the main steps are the lists and the substeps for each step are assigned to each card in that list. give your response in JSON format"
+  content: `You accurately break down a task into categories and steps in the style of a kanban relevant to the user request. This means that you give the categories of operation the user needs to complete their project/task and then the steps for each category. give your response in pure JSON format (no text before or after the JSON). Use this JSON structure for naming and nesting but dont overfit it. and use the same names (lower case) for the keys: {
+    "categories": [
+        {
+            "title": "Category",
+            "steps": [
+                "Step 1",
+                "Step 2",
+                "Step 3"
+            ]
+        },
+        {
+            "title": "Category",
+            "steps": [
+                "Step 12",
+                "Step 21",
+                "Step 33"
+            ]
+        },
+        {
+            "title": "Category",
+            "steps": [
+                "Step 14",
+                "Step 21",
+                "Step 36"
+            ]
+        }
+    ]
+},`
 }
 
 export async function POST(
@@ -35,14 +62,14 @@ export async function POST(
     }
 
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4",
       messages: [instructionMessage, ...messages]
     });
 
     return NextResponse.json(response.choices[0].message)
 
   } catch (error) {
-    console.log("[CODE_ERROR]", error);
+    // console.log("[CODE_ERROR]", error);
     return new NextResponse("Internal error", { status: 500 })
   }
 }

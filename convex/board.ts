@@ -5,6 +5,7 @@ export const createBoard = mutation({
   args: {
     authorId: v.string(),
     title: v.string(),
+    response: v.optional(v.string()),
     imageUrl: v.string()
   },
   handler: async (ctx, args) => {
@@ -14,16 +15,55 @@ export const createBoard = mutation({
       throw new Error("Unauthorized");
     }
 
-    const board = await ctx.db.insert("boards", {
+    const boardId = await ctx.db.insert("boards", {
       title: args.title,
       authorId: args.authorId,
       authorName: identity.name || "User",
       imageUrl: args.imageUrl
     })
 
-    return board
+    if (args.response) {
+      const responseObj = JSON.parse(args.response)
+      let count = -1
+
+      for (const category of responseObj.categories) {
+        const listId = await ctx.db.insert("lists", {
+          boardId: boardId,
+          title: category.title,
+          color: "000000",
+          index: count
+        })
+
+        const cardPromises = category.steps.map((step: any) => {
+          return ctx.db.insert("cards", {
+            listId: listId,
+            title: step,
+            description: "card description here",
+            color: "000000"
+          })
+        })
+
+        await Promise.all(cardPromises)
+  
+      }
+
+      // const listPromises = responseObj.categories.map((category: any) => {
+      //   count++
+      //   return ctx.db.insert("lists", {
+      //     boardId: boardId,
+      //     title: category.title,
+      //     color: "000000",
+      //     index: count
+      //   })
+      // })
+      //   await Promise.all(listPromises)
+      // }
+    }
+
+    return boardId
   }
 })
+
 
 export const getBoardListsCards = query({
   args: {
