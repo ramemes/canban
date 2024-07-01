@@ -77,7 +77,7 @@ export const ListCard = ({
 };
 
 
-ListCard.Skeleton = () => {
+ListCard.Skeleton = function ListCardSkeleton() {
   return (
     <div 
     className="flex flex-col bg-gradient-to-tr opacity-30 from-slate-600 to-slate-800 h-96 w-80" 

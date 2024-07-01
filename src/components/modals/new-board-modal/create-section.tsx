@@ -68,7 +68,6 @@ export const CreateSection = () => {
           </Label>
           <Input
             id="title"
-            defaultValue={title}
             value={title}
             onChange={(e) => updateTitle(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" ? createBoard() : null}

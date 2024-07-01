@@ -2,7 +2,7 @@ import { SideBar } from "@/app/dashboard/_components/sidebar";
 import { BoardNavBar } from "./board-nav-bar";
 
 
-export const BoardPageLayout = ({
+const BoardPageLayout = ({
   children 
 }: {children: React.ReactNode}) => {
   return (

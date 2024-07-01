@@ -1,7 +1,7 @@
 import { NavBar } from "../../components/navbar/navbar";
 import { SideBar } from "./_components/sidebar";
 
-export const DashboardLayout = ({
+const DashboardLayout = ({
   children 
 }: {children: React.ReactNode}) => {
   return (

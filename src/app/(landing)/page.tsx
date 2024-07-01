@@ -14,8 +14,8 @@ const font = Poppins({
 const LandingPage = () => {
   return (
     <div>
-      <div className="flex flex-row items-center justify-between p-3 shadow-md">
-        <div className="flex items-center space-x-3 px-1">
+      <div className="flex flex-row items-center justify-between p-3 shadow-md h-20">
+        <div className="flex items-center space-x-3 px-3">
           <Image
             src="/logo.svg" 
             alt="logo"

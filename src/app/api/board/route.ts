@@ -11,7 +11,7 @@ const openai = new OpenAI({
 
 const instructionMessage: ChatCompletionMessageParam = {
   role: "system",
-  content: `You accurately break down a task into categories and steps in the style of a kanban relevant to the user request. This means that you give the categories of operation the user needs to complete their project/task and then the steps for each category. give your response in pure JSON format (no text before or after the JSON). Use this JSON structure for naming and nesting but dont overfit it. and use the same names (lower case) for the keys: {
+  content: `You accurately break down a task into categories and steps in the style of a kanban relevant to the user request. This means that you give the categories of operation the user needs to complete their project/task and then the steps for each category. give your output in pure JSON format (no text before or after the JSON). again remember PURE JSON OUTPUT. Use this JSON structure for naming and nesting but dont overfit it. and use the same names (lower case) for the keys: {
     "categories": [
         {
             "title": "Category",
