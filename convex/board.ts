@@ -31,20 +31,21 @@ export const createBoard = mutation({
           boardId: boardId,
           title: category.title,
           color: "000000",
-          index: count
+          index: ++count
         })
+        let cardCount = -1
 
         const cardPromises = category.steps.map((step: any) => {
           return ctx.db.insert("cards", {
             listId: listId,
             title: step,
             description: "card description here",
-            color: "000000"
+            color: "000000",
+            index: ++cardCount
           })
         })
 
         await Promise.all(cardPromises)
-  
       }
 
       // const listPromises = responseObj.categories.map((category: any) => {

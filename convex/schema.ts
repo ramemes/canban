@@ -27,6 +27,7 @@ export default defineSchema({
     title: v.string(),
     description: v.string(),
     color: v.string(),
+    index: v.number(),
     listId: v.id("lists")
   })
     .index("by_list", ["listId"])

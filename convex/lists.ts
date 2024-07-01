@@ -1,5 +1,6 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
+import { getCardsByListId, getListsByBoardId } from "./listsHelpers";
 
 export const getLists = query({
   args: {
@@ -11,77 +12,42 @@ export const getLists = query({
     if (!identity) {
       throw new Error("Unauthorized");
     }
+    const lists = await getListsByBoardId(ctx, args.boardId)
 
-    const lists = await ctx.db.query("lists")
-      .withIndex("by_board", (q) => 
-        q
-          .eq("boardId", args.boardId)
-      )
-      .order("desc")
-      .collect()
-    
     const orderedLists = lists.sort((a,b) => a.index - b.index)
+  
+    const cardsPromises = orderedLists.map((list) => {
+      return getCardsByListId(ctx, list._id)
+    })
 
-    return orderedLists
+    const newCards =  await Promise.all(cardsPromises)
+  
+
+    const listsWithCards = orderedLists.map((list, index) => {
+      return {...list, cards: newCards[index].sort((a,b) => a.index - b.index)}
+    })
+  
+    return listsWithCards
   }
 })
 
-export const getListsLength = query({
+export const reorderLists = mutation({
   args: {
-    boardId: v.id("boards")
+    boardId: v.id("boards"),
+    reorderedListIds: v.array(v.id("lists")),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
 
     if (!identity) {
-      throw new Error("Unauthorized");
+      throw new Error("Unauthorized")
     }
 
-    const lists = await ctx.db.query("lists")
-      .withIndex("by_board", (q) => 
-        q
-          .eq("boardId", args.boardId)
-      )
-      .collect()
-    
-    // const orderedLists = lists.sort((a,b) => b.index - a.index)
+    const reorderListsPromise = args.reorderedListIds.map((listId, index) => {
+      return ctx.db.patch(listId, {index})
+    })
+    await Promise.all(reorderListsPromise)
 
-    return lists ? lists.length : 0
   }
 })
 
-export const deleteList = mutation({
-  args: {
-    listId: v.id("lists")
-  },
-  handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-
-    if (!identity) {
-      throw new Error("Unauthorized");
-    }
-
-    const list = await ctx.db.get(args.listId)
-
-    if (!list) {
-      throw new Error("Board not found")
-    }
-
-    const cards = await ctx.db.query("cards")
-      .withIndex("by_list", (q) => 
-        q
-          .eq("listId", args.listId)
-      )
-      .order("asc")
-      .collect()
-    
-    if (cards) {
-      const cardPromises = Promise.all(cards.map((card) => {
-        return ctx.db.delete(card._id)
-      }))
-      console.log(cardPromises)
-    }
-
-
-  }
-})

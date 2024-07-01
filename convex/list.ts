@@ -1,12 +1,12 @@
 import { mutation } from "./_generated/server";
 import { v } from "convex/values";
+import { getListsByBoardId } from "./listsHelpers";
 
 export const createList = mutation({
   args: {
     boardId: v.id("boards"),
     title: v.string(),
     color: v.string(),
-    index: v.number(),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -15,41 +15,25 @@ export const createList = mutation({
       throw new Error("Unauthorized")
     }
 
+    const lists = await ctx.db.query("lists")
+      .withIndex("by_board", (q) =>
+        q.eq("boardId", args.boardId)
+      )
+      .collect()
+
+    const listsLength = lists.length  
+
     const list = await ctx.db.insert("lists", {
       boardId: args.boardId,
       title: args.title,
       color: args.color,
-      index: args.index
+      index: listsLength
     })
 
     return list
   }
 })
 
-export const reorderList = mutation({
-  args: {
-    boardId: v.id("boards"),
-    title: v.string(),
-    color: v.string(),
-    index: v.number(),
-  },
-  handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-
-    if (!identity) {
-      throw new Error("Unauthorized")
-    }
-
-    const list = await ctx.db.insert("lists", {
-      boardId: args.boardId,
-      title: args.title,
-      color: args.color,
-      index: args.index
-    })
-
-    return list
-  }
-})
 
 export const editListTitle = mutation({
   args: {
@@ -83,6 +67,12 @@ export const deleteList = mutation({
       throw new Error("Unauthorized");
     }
 
+    const list = await ctx.db.get(args.id)
+
+    if (!list) return;
+
+
+
     const cards = await ctx.db.query("cards")
     .withIndex("by_list", (q) => 
       q.eq("listId", args.id)
@@ -93,6 +83,20 @@ export const deleteList = mutation({
     const deleteCardsPromises = cards.map(card => ctx.db.delete(card._id));
     await Promise.all(deleteCardsPromises);
 
-    return await ctx.db.delete(args.id);
+    const deletedList = await ctx.db.delete(args.id);
+
+    const lists = await getListsByBoardId(ctx, list.boardId)
+    const orderedLists = lists.sort((a,b) => a.index - b.index)
+
+    const reIndexedListsPromises = orderedLists.map((list,index) => ctx.db.patch(list._id,{
+      index: index
+    }))
+
+    await Promise.all(reIndexedListsPromises);
+
+
+    return deletedList
   }
 })
+
+

@@ -1,5 +1,6 @@
 import { mutation } from "./_generated/server";
 import { v } from "convex/values";
+import { getCardsByListId } from "./listsHelpers";
 
 export const createCard = mutation({
   args: {
@@ -22,6 +23,7 @@ export const createCard = mutation({
       title: args.title,
       description: args.description,
       color: defaultColor,
+      index: 0
     })
 
     return card
@@ -72,9 +74,21 @@ export const deleteCard = mutation({
       throw new Error("Unauthorized")
     }
 
+    const card = await ctx.db.get(args.id)
 
-    const card = await ctx.db.delete(args.id)
+    if (!card) return;
 
-    return card
+    const deletedCard = await ctx.db.delete(args.id)
+
+    const cards = await getCardsByListId(ctx, card.listId)
+    const orderedCards = cards.sort((a,b) => a.index - b.index)
+
+    const reIndexedCardsPromises = orderedCards.map((card,index) => ctx.db.patch(card._id,{
+      index: index
+    }))
+
+    await Promise.all(reIndexedCardsPromises)
+
+    return deletedCard
   }
 })

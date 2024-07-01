@@ -20,6 +20,7 @@ import type * as card from "../card.js";
 import type * as cards from "../cards.js";
 import type * as list from "../list.js";
 import type * as lists from "../lists.js";
+import type * as listsHelpers from "../listsHelpers.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -36,6 +37,7 @@ declare const fullApi: ApiFromModules<{
   cards: typeof cards;
   list: typeof list;
   lists: typeof lists;
+  listsHelpers: typeof listsHelpers;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
