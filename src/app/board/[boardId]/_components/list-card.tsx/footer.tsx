@@ -1,3 +1,6 @@
+"use client";
+
+
 import { Input } from "@/components/ui/input";
 import { LayoutTemplate, Plus } from "lucide-react";
 import { useState } from "react";

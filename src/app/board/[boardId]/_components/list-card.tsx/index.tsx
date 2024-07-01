@@ -1,3 +1,5 @@
+"use client";
+
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { CardList } from "../card-list";
 import { Footer } from "./footer";

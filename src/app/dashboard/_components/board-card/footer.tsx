@@ -1,3 +1,4 @@
+"use client";
 
 interface FooterProps {
   title: string

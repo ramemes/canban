@@ -1,3 +1,6 @@
+"use client";
+
+
 import { CardModal } from "@/components/modals/card-modal";
 import { 
   DropdownMenuShortcut, 

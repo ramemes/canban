@@ -1,3 +1,6 @@
+"use client";
+
+
 import { Plus } from "lucide-react";
 import { useApiMutation } from "../../../hooks/useApiMutation";
 import { api } from "../../../../convex/_generated/api";
