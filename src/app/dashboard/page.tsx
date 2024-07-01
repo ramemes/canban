@@ -1,5 +1,3 @@
-"use client";
-
 import { SignOutButton, UserButton, useUser } from "@clerk/nextjs";
 import { BoardList } from "./_components/board-list";
 
