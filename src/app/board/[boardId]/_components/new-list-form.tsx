@@ -36,10 +36,6 @@ export const NewListForm = ({
 
   const [listTitle, setListTitle] = useState("")
 
-  const listsLength = useQuery(api.lists.getListsLength, {
-    boardId: boardId as Id<"boards">,
-  })
-
   
 
   const createNewList = (e: any) => {
@@ -56,7 +52,6 @@ export const NewListForm = ({
       boardId,
       title: listTitle,
       color:  newListColor,
-      index: listsLength    
     })
 
     .catch(() => toast.error("Failed to create card"))

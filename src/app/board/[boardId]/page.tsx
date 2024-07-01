@@ -22,8 +22,12 @@ const BoardIdPage = ({
     boardId: params.boardId as Id<"boards">,
   });
 
+  const lists = useQuery(api.lists.getLists, {
+    boardId: params.boardId as Id<"boards">
+  })
 
-  if (!board) {
+
+  if (!board || !lists) {
     return (
       <main
       className="h-full w-full relative touch-none flex items-center justify-center"
@@ -34,6 +38,7 @@ const BoardIdPage = ({
   
   }
 
+
   return (
     <div className="z-[1] flex w-full flex-col overflow-x-hidden bg-gradient-to-b from-purple-700 to-fuchsia-700">
 
@@ -41,7 +46,10 @@ const BoardIdPage = ({
         boardId={board._id}
         title={board.title}
       />
-      <ListList boardId={board._id}/>
+      <ListList 
+        boardId={board._id}
+        listsCards={lists}
+      />
     </div>
 
 

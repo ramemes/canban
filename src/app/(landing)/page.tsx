@@ -1,3 +1,4 @@
+import { ThemeSwitcher } from "@/components/navbar/theme-switcher";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SignIn } from "@clerk/nextjs";
@@ -28,6 +29,7 @@ const LandingPage = () => {
           </span>
         </div>
         <div className="flex gap-2">
+          <ThemeSwitcher/>
           <Link href="/sign-in">
             <Button>
               Sign In

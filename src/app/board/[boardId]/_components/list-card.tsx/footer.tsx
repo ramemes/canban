@@ -25,7 +25,7 @@ export const Footer = ({
     )
   } else {
     return (
-      <div className="flex flex-row items-center justify-between gap-x-2">
+      <div className="flex flex-row items-center justify-between gap-x-2 ">
       <div 
         className="flex flex-1 py-2 border-sm bg-gray-300 text-white bg-opacity-15 rounded-lg p-1 pl-2 hover:bg-opacity-30 hover:cursor-pointer"
         onClick={() => setAddingCard(true)}
