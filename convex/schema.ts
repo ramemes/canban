@@ -31,4 +31,6 @@ export default defineSchema({
     listId: v.id("lists")
   })
     .index("by_list", ["listId"])
+
+
 })
