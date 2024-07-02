@@ -1,7 +1,7 @@
 "use client";
 
 
-import { SideBar } from "@/app/dashboard/_components/sidebar";
+import { SideBar } from "@/components/sidebar";
 import { BoardNavBar } from "./board-nav-bar";
 
 

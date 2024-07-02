@@ -51,7 +51,7 @@ export const ListList = ({
 
   if (!liveListsCards) {
     return (
-      <div className="flex flex-row p-8 gap-x-4 h-full overflow-x-scroll z-[1]">
+      <div className="flex flex-row p-8 gap-x-4 h-full overflow-x-scroll  touch-pan-x z-[1] ">
         <ListCard.Skeleton/>
         <ListCard.Skeleton/>
         <ListCard.Skeleton/>
@@ -127,7 +127,7 @@ export const ListList = ({
           <ol 
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className={cn("flex flex-row p-8 h-full overflow-x-scroll z-[1]")}
+            className={cn("flex flex-row p-8 h-full overflow-x-scroll z-[1] ")}
           >
             {liveListsCards.map((list, index) => (
                 <ListCard 

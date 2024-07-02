@@ -6,6 +6,7 @@ import { Poppins } from "next/font/google";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { ThemeSwitcher } from "@/components/navbar/theme-switcher";
+import MobileSidebar from "@/components/mobile-sidebar";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -15,6 +16,9 @@ const font = Poppins({
 export const BoardNavBar = () => {
   return (
     <div className="z-[1] flex items-center justify-between pl-6 gap-x-16 p-3 w-full h-[70px] shadow-zinc-300 border-b">
+      <div className="sm:hidden">
+        <MobileSidebar/>
+      </div>
       <Link href="/dashboard">
         <div className="flex items-center justify-center gap-x-2 w-44 ml-3">
           <Image

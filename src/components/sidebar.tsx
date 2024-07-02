@@ -17,7 +17,7 @@ export const SideBar = () => {
   const favorites = searchParams.get("favorites")
 
   return (
-    <div className="flex flex-col min-w-64">
+    <div className="flex flex-col min-w-64  max-sm:hidden">
 
       <div className="z-[0] left-0 h-full w-full flex pt-6 p-6 flex-col gap-y-2 ">
       <Button 

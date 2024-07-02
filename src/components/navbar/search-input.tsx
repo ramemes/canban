@@ -7,8 +7,13 @@ import { Input } from "../ui/input";
 import { useDebounceCallback, useDebounceValue } from "usehooks-ts";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-export const SearchInput = () => {
+interface SearchInputProps {
+  className?: string
+}
+
+export const SearchInput = ({className}: SearchInputProps) => {
   const router = useRouter()
 
   const [value, setValue] = useState("")
@@ -35,7 +40,7 @@ export const SearchInput = () => {
 
 
   return (
-    <div className="w-full relative">
+    <div className={cn("w-full relative", className)}>
       <Search 
         className="absolute top-1/2 left-3 transform -translate-y-1/2 text-muted-foreground h-4 w-4 "
       />
