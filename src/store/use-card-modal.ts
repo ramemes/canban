@@ -1,23 +1,36 @@
 import { create } from "zustand";
 
-const defaultValues = { id: "", title: "", description: ""};
 
 interface ICardModal {
+  id: string; 
+  title: string;
+  description: string
   isOpen: boolean;
-  initialValues: typeof defaultValues;
   onOpen: (id: string, title: string, description: string) => void;
   onClose: () => void;
+  updateDescription: (e: any) => void; 
+  updateTitle: (e: any) => void; 
+
 };
 
 export const useCardModal = create<ICardModal>((set) => ({
   isOpen: false,
-  initialValues: defaultValues,
+  id: "", 
+  title: "", 
+  description: "",
   onOpen: (id, title, description) => set({
     isOpen: true,
-    initialValues: { id, title, description }
+    id: id, 
+    title: title, 
+    description: description
   }),
   onClose: () => set({
     isOpen: false,
-    initialValues: defaultValues,
   }),
+  updateDescription: (description) => set(() => ({
+    description
+  })),
+  updateTitle: (title) => set(() => ({
+    title
+  })),
 }))

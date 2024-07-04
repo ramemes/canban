@@ -18,7 +18,7 @@ import {
 import { useUser } from "@clerk/nextjs";
 import {  Ellipsis,MoreHorizontal,Pencil, Trash} from "lucide-react";
 import { Inter, Poppins } from "next/font/google";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useApiMutation } from "../../../../../hooks/useApiMutation";
 import { api } from "../../../../../../convex/_generated/api";
 import { toast } from "sonner";
@@ -54,7 +54,7 @@ export const Header = ({
 
 
   // const [titleEditing, setTitleEditing] = useState(false)
-  // const [titleValue, setTitleValue] = useState(title)
+  const [titleValue, setTitleValue] = useState(title)
 
   // const changeTitle = () => {
   //   renameList({
@@ -64,6 +64,12 @@ export const Header = ({
   //   .catch(() => toast.error("Failed to rename list"))
   //   .finally(() => setTitleEditing(false))
   // }
+
+  useEffect(() => {
+    setTitleValue(title)
+  }, [title])
+
+  if (!titleValue) return;
   
   const onDelete = () => {
     deleteList({
@@ -80,7 +86,8 @@ export const Header = ({
 
       <RenameInput
         id={listId}
-        title={title}
+        title={titleValue}
+        updateTitle={setTitleValue}
         renameFunction={renameList}
         dataType="list"
         className="w-fit  text-white font-sans "

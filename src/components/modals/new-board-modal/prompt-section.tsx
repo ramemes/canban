@@ -101,10 +101,11 @@ export const PromptSection = () => {
             <Textarea
               id="title"
               // defaultValue={prompt}
+              placeholder="Give me a development plan for making a Kanban board application."
               value={prompt}
               onChange={(e) => updatePrompt(e.target.value)}
               // onKeyDown={(e) => e.key === "Enter" ? createBoard() : null}
-              className=""
+              className=" placeholder:text-gray-500 placeholder:text-opacity-90"
             />
           </div>
         </div>

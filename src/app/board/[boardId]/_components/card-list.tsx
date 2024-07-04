@@ -12,7 +12,6 @@ interface CardListProps {
 }
 
 export const CardList = ({
-  listId,
   cards
 }: CardListProps) => {
 
