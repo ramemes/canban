@@ -130,7 +130,7 @@ export const ListList = ({
             className={cn("flex flex-row p-8 h-full overflow-x-scroll z-[1] ")}
           >
             {liveListsCards.map((list, index) => (
-                <ListCard 
+              <ListCard 
                 key={list._id}
                 index={list.index}
                 listId={list._id}

@@ -15,11 +15,11 @@ import { toast } from "sonner";
 
 
 
-import { api } from "../../../../../convex/_generated/api";
+import { api } from "../../../../../../convex/_generated/api";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useRenameModal } from "@/store/use-rename-modal";
-import { ConfirmModal } from "../../../../components/modals/confirm-modal";
-import { Button } from "../../../../components/ui/button";
+import { ConfirmModal } from "../../../../../components/modals/confirm-modal";
+import { Button } from "../../../../../components/ui/button";
 
 
 

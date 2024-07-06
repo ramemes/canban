@@ -16,6 +16,12 @@ export const createCard = mutation({
       throw new Error("Unauthorized")
     }
 
+    const listLength = (await ctx.db
+      .query("cards")
+      .withIndex("by_list", (q) => q.eq("listId", args.listId))
+      .collect()).length
+
+
     const defaultColor = "000000"
 
     const card = await ctx.db.insert("cards", {
@@ -23,7 +29,7 @@ export const createCard = mutation({
       title: args.title,
       description: args.description,
       color: defaultColor,
-      index: 0
+      index: listLength
     })
 
     return card

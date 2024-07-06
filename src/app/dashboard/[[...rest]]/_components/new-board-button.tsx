@@ -2,33 +2,31 @@
 
 
 import { Plus } from "lucide-react";
-import { useApiMutation } from "../../../hooks/useApiMutation";
-import { api } from "../../../../convex/_generated/api";
+import { useApiMutation } from "../../../../hooks/useApiMutation";
+import { api } from "../../../../../convex/_generated/api";
 import { useRouter } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
-import { imgFromPublic } from "../../../../utils/utils";
+import { imgFromPublic } from "../../../../../utils/utils";
 import { useNewBoardModal } from "@/store/use-new-board-modal";
 
 interface NewBoardButtonProps {
-  authorId: string;
+  orgId: string;
 }
 
 
 
 export const NewBoardButton = ({
-  authorId
+  orgId
 }: NewBoardButtonProps) => {
-  const { user } = useUser()
   const {onOpen} = useNewBoardModal()
 
-  if (!user) return;
+  const { userId } = useAuth();
 
   
   return (
     <button
-      onClick={() => onOpen(authorId)}
-      // disabled={pending}
+      onClick={() => onOpen(orgId)}
     >
       <div className="flex flex-col bg-fuchsia-600 justify-center items-center aspect-[900/750] rounded-md text-white  hover:bg-fuchsia-700  cursor-pointer ">
         <Plus/>

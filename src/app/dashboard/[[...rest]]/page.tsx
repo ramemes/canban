@@ -1,7 +1,8 @@
 "use client";
 
-import { SignOutButton, UserButton, useUser } from "@clerk/nextjs";
+import { useOrganization, useUser } from "@clerk/nextjs";
 import { BoardList } from "./_components/board-list";
+import { EmptyOrg } from "./_components/empty-org";
 
 interface DashboardPageProps {
   searchParams: {
@@ -14,14 +15,15 @@ interface DashboardPageProps {
 const DashboardPage = ({
   searchParams,
 }:DashboardPageProps) => {
-  const { user } = useUser()
+  const { organization } = useOrganization();
+
 
   return (
     <div className="flex-1 w-full h-[calc(100%-65px)] p-6">
-      {!user ? "User not found" 
+      {!organization ? <EmptyOrg/>  
       :
         <BoardList
-          authorId={user.id}
+          orgId={organization.id}
           query={searchParams}
         />
       }

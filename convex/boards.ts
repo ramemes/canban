@@ -5,13 +5,13 @@ import { v } from "convex/values";
 
 export const getUserBoards = query({
   args: {
-    authorId: v.string(),
+    orgId: v.string(),
     search: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
 
-    if (!identity || identity.subject !== args.authorId) {
+    if (!identity) {
       throw new Error("Unauthorized");
     }
 
@@ -24,16 +24,16 @@ export const getUserBoards = query({
       .withSearchIndex("search_title", (q) => 
         q
           .search("title", title)
-          .eq("authorId", args.authorId)
+          .eq("orgId", args.orgId)
       )
       .collect();
 
     } else {
         boards = await ctx.db
         .query("boards")
-        .withIndex("by_author_id", (q) =>
+        .withIndex("by_org_id", (q) =>
           q
-            .eq("authorId", args.authorId)
+            .eq("orgId", args.orgId)
         )
         .order("desc")
         .collect();

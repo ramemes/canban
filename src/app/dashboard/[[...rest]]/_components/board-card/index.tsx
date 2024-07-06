@@ -18,7 +18,7 @@ interface BoardCardProps {
 export const BoardCard = ({
   title,
   image,
-  id,
+  id
 }: BoardCardProps) => {
 
   const [showActions, setShowActions] = useState(false)

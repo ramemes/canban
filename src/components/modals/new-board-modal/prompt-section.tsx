@@ -26,6 +26,7 @@ import { ChevronLeft } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { useState } from "react";
+import { useOrganization } from "@clerk/nextjs";
 
 // interface NewBoardPromptModalProps {
 //   setAddingPrompt: (x: boolean) => void;
@@ -43,11 +44,14 @@ export const PromptSection = () => {
     updatePrompt,
     setAddingPrompt
   } = useNewBoardModal()
+
+  const { organization } = useOrganization();
   
   const { mutate, pending } = useApiMutation(api.board.createBoard)
   const [apiPending, setApiPending] = useState(false)
 
   const createBoard = async () => {
+    if (!organization) return;
     try {
       setApiPending(true)
       const randomImage = imgFromPublic()
@@ -60,10 +64,9 @@ export const PromptSection = () => {
       });
       // console.log(response.data.content)
       mutate({
-        authorId: id,
+        orgId: organization.id,
         title,
         response: response.data.content,
-        imageUrl: randomImage
       })
       .then((board) => {
         toast.success("Board created");

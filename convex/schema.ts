@@ -6,12 +6,13 @@ export default defineSchema({
     imageUrl: v.string(),
     title: v.string(),
     authorId: v.string(),
+    orgId: v.string(),
     authorName: v.string(),
   })
-    .index("by_author_id", ["authorId"])
+    .index("by_org_id", ["orgId"])
     .searchIndex("search_title", {
       searchField: "title",
-      filterFields: ["authorId"]
+      filterFields: ["orgId"]
     }),
 
 
@@ -30,7 +31,6 @@ export default defineSchema({
     index: v.number(),
     listId: v.id("lists")
   })
-    .index("by_list", ["listId"])
-
+    .index("by_list", ["listId"]),
 
 })

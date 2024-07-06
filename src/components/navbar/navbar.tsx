@@ -17,7 +17,9 @@ const font = Poppins({
 export const NavBar = () => {
   return (
     <div className="z-[1] flex items-center justify-between pl-6  p-3 w-full h-[70px] shadow-zinc-300 border-b">
-      <MobileSidebar/>
+      <MobileSidebar
+        boardPage={false}
+      />
       <Link href="/dashboard">
         <div className="flex items-center justify-center gap-x-2 w-44 ml-3">
           <Image

@@ -20,11 +20,10 @@ import { Label } from "../../ui/label";
 import { imgFromPublic } from "../../../../utils/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useOrganization } from "@clerk/nextjs";
 
 
-// interface CreateSectionProps {
-//   setAddingPrompt: (x: boolean) => void;
-// }
+
 
 export const CreateSection = () => {
   
@@ -38,15 +37,17 @@ export const CreateSection = () => {
     setAddingPrompt
   } = useNewBoardModal()
 
+  const { organization } = useOrganization();
   const { mutate, pending } = useApiMutation(api.board.createBoard)
 
   const createBoard = () => {
-    const randomImage = imgFromPublic()
+    if (!organization) return;
+
+    
     
     mutate({
-      authorId: id,
-      title,
-      imageUrl: randomImage
+      orgId: organization.id,
+      title
     })
     .then((board) => {
       toast.success("Board created");

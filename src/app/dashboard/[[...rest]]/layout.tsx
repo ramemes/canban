@@ -1,4 +1,4 @@
-import { NavBar } from "../../components/navbar/navbar";
+import { NavBar } from "@/components/navbar/navbar";
 import { SideBar } from "@/components/sidebar";
 
 const DashboardLayout = ({
@@ -8,7 +8,7 @@ const DashboardLayout = ({
     <main className="flex flex-col h-full ">
       <NavBar/>
       <div className="flex flex-row h-full">
-        <SideBar/>
+        <SideBar boardPage={false}/>
         {children}
       </div>
     </main>

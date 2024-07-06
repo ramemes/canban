@@ -3,9 +3,10 @@
 import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
-import { Loader } from "lucide-react";
 import { BoardNav } from "./_components/board-nav";
 import { ListList } from "./_components/list-list";
+import { Loading } from "@/components/auth/loading";
+import { Protect } from "@clerk/nextjs";
 
 interface BoardIdPageProps {
   params: {
@@ -13,46 +14,29 @@ interface BoardIdPageProps {
   }
 }
 
-
 const BoardIdPage = ({
   params,
 }: BoardIdPageProps) => {
 
-  const board = useQuery(api.board.get, {
+  const board = useQuery(api.board.getBoardListsCards, {
     boardId: params.boardId as Id<"boards">,
   });
 
-  const lists = useQuery(api.lists.getLists, {
-    boardId: params.boardId as Id<"boards">
-  })
-
-
-  if (!board || !lists) {
-    return (
-      <main
-      className="h-full w-full relative touch-none flex items-center justify-center"
-      >
-        <Loader className="h-6 w-6 text-muted-foreground animate-spin"/>
-      </main>
-    )
-  
-  }
-
+  if (!board) return (
+    <Loading/>
+  );
 
   return (
     <div className="z-[1] flex w-full flex-col overflow-x-hidden bg-gradient-to-b from-purple-700 to-fuchsia-700">
-
       <BoardNav
         boardId={board._id}
         title={board.title}
       />
       <ListList 
         boardId={board._id}
-        listsCards={lists}
+        listsCards={board.lists}
       />
     </div>
-
-
   )
 };
 

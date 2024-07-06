@@ -1,25 +1,32 @@
 import { mutation, query } from "./_generated/server";
+
 import { v } from "convex/values";
+import { imgFromPublic } from "../utils/utils";
+import { getListsWithCards } from "./listsHelpers";
+
+
 
 export const createBoard = mutation({
   args: {
-    authorId: v.string(),
     title: v.string(),
     response: v.optional(v.string()),
-    imageUrl: v.string()
+    orgId: v.string(),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
 
-    if (!identity || identity.subject !== args.authorId) {
+    if (!identity) {
       throw new Error("Unauthorized");
     }
+    console.log(identity)
+    const randomImage = imgFromPublic();
 
     const boardId = await ctx.db.insert("boards", {
       title: args.title,
-      authorId: args.authorId,
+      orgId: args.orgId,
+      authorId: identity.subject,
       authorName: identity.name || "User",
-      imageUrl: args.imageUrl
+      imageUrl: randomImage
     })
 
     if (args.response) {
@@ -47,18 +54,6 @@ export const createBoard = mutation({
 
         await Promise.all(cardPromises)
       }
-
-      // const listPromises = responseObj.categories.map((category: any) => {
-      //   count++
-      //   return ctx.db.insert("lists", {
-      //     boardId: boardId,
-      //     title: category.title,
-      //     color: "000000",
-      //     index: count
-      //   })
-      // })
-      //   await Promise.all(listPromises)
-      // }
     }
 
     return boardId
@@ -68,103 +63,72 @@ export const createBoard = mutation({
 
 export const getBoardListsCards = query({
   args: {
-    boardId: v.id("boards")
+    boardId: v.id("boards"),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
-
+    
     if (!identity) {
       throw new Error("Unauthorized");
     }
-
+    console.log(identity)
     const board = await ctx.db.get(args.boardId)
 
     if (!board) {
       throw new Error("Board not found")
     }
-
-    if (identity.subject !== board.authorId) {
-      throw new Error("Unauthorized")
-    }
-
-    const lists = await ctx.db.query("lists")
-      .withIndex("by_board", (q) => 
-        q
-          .eq("boardId", board._id)
-      )
-      .order("desc")
-      .collect()
-    
     
 
-    const listsCardsPromises = async () => {
-      const listsWithCards = await Promise.all(
-        lists.map(async (list) => {
-          const cards = await ctx.db.query("cards")
-            .withIndex("by_list", (q) => q.eq("listId", list._id))
-            .order("desc")
-            .collect();
+    // if (identity.familyName !== board.orgId) {
+    //   throw new Error("Unauthorized")
+    // }
 
-          return {
-            ...list,
-            cards
-          };
-        })
-      );
-
-    console.log(listsWithCards);
-    return listsWithCards;
-  };
-
-    const listsCards = await listsCardsPromises()
-    return {
-      ...board,
-      lists: listsCards
-    }
-    
-
-
-  }
-})
-
-
-export const getBoardLists = query({
-  args: {
-    boardId: v.id("boards")
-  },
-  handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-
-    if (!identity) {
-      throw new Error("Unauthorized");
-    }
-
-    const board = await ctx.db.get(args.boardId)
-
-    if (!board) {
-      throw new Error("Board not found")
-    }
-
-    if (identity.subject !== board.authorId) {
-      throw new Error("Unauthorized")
-    }
-
-    const lists = await ctx.db.query("lists")
-      .withIndex("by_board", (q) => 
-        q
-          .eq("boardId", args.boardId)
-      )
-      .order("desc")
-      .collect()
-   
+    const lists = await getListsWithCards(ctx, args.boardId)
+  
     return {...board, lists}
+    
+
   }
 })
+
+
+// export const getBoardLists = query({
+//   args: {
+//     boardId: v.id("boards")
+//   },
+//   handler: async (ctx, args) => {
+//     const identity = await ctx.auth.getUserIdentity();
+
+//     if (!identity) {
+//       throw new Error("Unauthorized");
+//     }
+
+//     const board = await ctx.db.get(args.boardId)
+
+//     if (!board) {
+//       throw new Error("Board not found")
+//     }
+
+//     if (identity.subject !== board.authorId) {
+//       throw new Error("Unauthorized")
+//     }
+
+//     const lists = await ctx.db.query("lists")
+//       .withIndex("by_board", (q) => 
+//         q
+//           .eq("boardId", args.boardId)
+//       )
+//       .order("desc")
+//       .collect()
+   
+//     return {...board, lists}
+//   }
+// })
 
 
 export const get = query({
   args: {
-    boardId: v.id("boards")
+    boardId: v.id("boards"),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -182,6 +146,7 @@ export const get = query({
     if (identity.subject !== board.authorId) {
       throw new Error("Unauthorized")
     }
+    
 
     return board
   }

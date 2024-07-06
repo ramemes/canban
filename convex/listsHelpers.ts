@@ -24,3 +24,23 @@ export async function getCardsByListId(ctx: QueryCtx, id: Id<"lists">): Promise<
 
   return cards
 }
+
+export async function getListsWithCards(ctx: QueryCtx, boardId: Id<"boards">) {
+
+  const lists = await getListsByBoardId(ctx, boardId)
+
+  const orderedLists = lists.sort((a,b) => a.index - b.index)
+
+  const cardsPromises = orderedLists.map((list) => {
+    return getCardsByListId(ctx, list._id)
+  })
+
+  const newCards = await Promise.all(cardsPromises)
+
+
+  const listsWithCards = orderedLists.map((list, index) => {
+    return {...list, cards: newCards[index].sort((a,b) => a.index - b.index)}
+  })
+
+  return listsWithCards
+}

@@ -9,6 +9,7 @@ body,
 }
 
 @layer base {
+  
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -105,3 +106,4 @@ body,
     hover:from-slate-700 hover:to-slate-800
   }
 }
+
