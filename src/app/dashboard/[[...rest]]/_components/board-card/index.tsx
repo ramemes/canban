@@ -26,7 +26,7 @@ export const BoardCard = ({
   return (
     <Link href={`/board/${id}`}>
       <div 
-        className="flex relative flex-col overflow-hidden rounded-lg justify-center outline-1 aspect-[900/750] outline-gray-200 outline "
+        className="flex relative flex-col overflow-hidden rounded-lg justify-center outline-1 aspect-[900/720] outline-gray-200 outline "
       >
         <div 
           className="flex relative flex-col aspect-[900/600] overflow-hidden rounded-t-md transition-opacity hover:opacity-80"
@@ -36,8 +36,10 @@ export const BoardCard = ({
           <Image
             src={image}
             alt={title}
-            fill
-            className="object-fit"
+            // fill
+            width={900}
+            height={600}
+            className="h-[1000px] overflow-visible"
           />
           <BoardCardActions
             id={id}
