@@ -16,7 +16,6 @@ import { useApiMutation } from "@/hooks/useApiMutation";
 
 import { api } from "../../../../convex/_generated/api";
 import { useNewBoardModal } from "@/store/use-new-board-modal";
-import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { Label } from "../../ui/label";
 import { imgFromPublic } from "../../../../utils/utils";
@@ -28,9 +27,7 @@ import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { useState } from "react";
 import { useOrganization } from "@clerk/nextjs";
 
-// interface NewBoardPromptModalProps {
-//   setAddingPrompt: (x: boolean) => void;
-// }
+
 
 export const PromptSection = () => {
   const router = useRouter()

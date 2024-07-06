@@ -92,38 +92,6 @@ export const getBoardListsCards = query({
 })
 
 
-// export const getBoardLists = query({
-//   args: {
-//     boardId: v.id("boards")
-//   },
-//   handler: async (ctx, args) => {
-//     const identity = await ctx.auth.getUserIdentity();
-
-//     if (!identity) {
-//       throw new Error("Unauthorized");
-//     }
-
-//     const board = await ctx.db.get(args.boardId)
-
-//     if (!board) {
-//       throw new Error("Board not found")
-//     }
-
-//     if (identity.subject !== board.authorId) {
-//       throw new Error("Unauthorized")
-//     }
-
-//     const lists = await ctx.db.query("lists")
-//       .withIndex("by_board", (q) => 
-//         q
-//           .eq("boardId", args.boardId)
-//       )
-//       .order("desc")
-//       .collect()
-   
-//     return {...board, lists}
-//   }
-// })
 
 
 export const get = query({
@@ -164,10 +132,6 @@ export const editBoardTitle = mutation({
     if (!identity) {
       throw new Error("Unauthorized");
     }
-    // if (!args.title.length || args.title.length > 40) {
-    //   throw new Error("Title must be between 0 and 40 characters")
-    // }
-
     
     const updatedBoard = await ctx.db.patch(args.id, {
       title: args.title
