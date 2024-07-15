@@ -1,5 +1,14 @@
 "use client";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+
 import { 
   AlertDialogAction, 
   AlertDialogFooter, 
@@ -64,14 +73,14 @@ export const RenameModal = () => {
   }
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={onClose}>
-      <AlertDialogContent className="sm:max-w-[425px]">
-        <AlertDialogHeader>
-          <AlertDialogTitle>Edit Title</AlertDialogTitle>
-          <AlertDialogDescription>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit Title</DialogTitle>
+          <DialogDescription>
             Enter a new title for your board
-          </AlertDialogDescription>
-        </AlertDialogHeader>
+          </DialogDescription>
+        </DialogHeader>
         <form onSubmit={editTitle} className="space-y-4">
           <Input
               autoFocus
@@ -84,13 +93,13 @@ export const RenameModal = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
 
-          <AlertDialogFooter>
+          <DialogFooter>
               <Button disabled={pending} type="submit">Save changes</Button>
-          </AlertDialogFooter>
+          </DialogFooter>
         </form>
 
-      </AlertDialogContent>
-    </AlertDialog>
+      </DialogContent>
+    </Dialog>
   )
 }
 

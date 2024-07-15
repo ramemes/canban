@@ -1,16 +1,13 @@
 "use client";
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { OrganizationSwitcher, useUser } from "@clerk/nextjs";
-import { LayoutDashboard, Star } from "lucide-react";
+import { OrganizationSwitcher } from "@clerk/nextjs";
+import { LayoutDashboard} from "lucide-react";
 import { useTheme } from "next-themes";
-import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-import { useDarkMode } from "usehooks-ts";
+
 
 export const SideBar = ( {boardPage} : {boardPage: boolean}) => {
   
