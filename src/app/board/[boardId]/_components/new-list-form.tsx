@@ -1,18 +1,12 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useUser } from "@clerk/nextjs";
-import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useForm } from "react-hook-form"
-import { z } from "zod"
 import { useApiMutation } from "../../../../hooks/useApiMutation";
 import { api } from "../../../../../convex/_generated/api";
 import { toast } from "sonner";
-import { useQuery } from "convex/react";
-import { Id } from "../../../../../convex/_generated/dataModel";
 import { useEffect, useRef, useState } from "react";
 
 interface NewListFormProps {
@@ -20,9 +14,7 @@ interface NewListFormProps {
   setAddingList: any;
 }
  
-const formSchema = z.object({
-  title: z.string().min(2).max(50),
-})
+
 
 const newListColor = "000000"
 
@@ -35,7 +27,7 @@ export const NewListForm = ({
   const { mutate, pending } = useApiMutation(api.list.createList);
 
   const [listTitle, setListTitle] = useState("")
-
+  const buttonRef = useRef(null)
   
 
   const createNewList = (e: any) => {
@@ -61,19 +53,31 @@ export const NewListForm = ({
 
   }
 
+  const handleBlur = (e: any) => {
+    if (e.relatedTarget !== buttonRef.current) {
+      setAddingList(false)
+    }
+  }
+
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter") createNewList(e)
+    if (e.key === "Escape") setAddingList(false)
+  }
+
   return (
-    <div className="flex flex-col gap-y-2 w-80" onBlur={() => setAddingList(false)}>
+    <div className="flex flex-col gap-y-2 w-80 " onBlur={handleBlur}>
       <Input 
         value={listTitle}
         onChange={(e) => setListTitle(e.target.value)}
-        onKeyDown={(e) => {e.key === "Enter" ? createNewList(e) : null}}
+        onKeyDown={handleKeyDown}
         className={listTitle.length < 3 ? "focus-visible:outline-red-500" :"focus-visible:outline-white"}
         autoFocus 
         placeholder="Enter List title..."
       />
       <Button 
+        ref={buttonRef}
         onClick={createNewList}
-        className="bg-blue-600 hover:bg-blue-500"
+        className="bg-slate-900 hover:bg-slate-800 text-white"
       >
         Add Card
       </Button>

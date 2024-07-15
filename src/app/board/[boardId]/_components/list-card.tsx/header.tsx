@@ -102,8 +102,8 @@ export const Header = ({
 
 
           <ConfirmModal
-            header="Delete board?"
-            description="This will delete the board and all of its contents."
+            header="Delete list?"
+            description="This will delete the list and all of its contents."
             disabled={deleteListPending}
             onConfirm={onDelete}
           >
