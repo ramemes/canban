@@ -47,7 +47,7 @@ const LandingPage = () => {
       >
           <div className="flex flex-col items-center gap-10 max-w-4xl ">
             <h1 
-              className="p-1 font-semibold text-6xl text-center inline-block bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-600 to-cyan-500"
+              className={`p-1 font-semibold text-6xl text-center inline-block bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-600 to-cyan-500`}
             >
               Organize Your Projects, Simplify Collaboration
             </h1>
