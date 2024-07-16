@@ -65,7 +65,7 @@ export const NewListForm = ({
   }
 
   return (
-    <div className="flex flex-col gap-y-2 w-80 " onBlur={handleBlur}>
+    <div className="flex flex-col gap-y-2 w-80" onBlur={handleBlur}>
       <Input 
         value={listTitle}
         onChange={(e) => setListTitle(e.target.value)}

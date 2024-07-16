@@ -62,11 +62,13 @@ export const BoardCardActions = ({
 
 
   return (
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           {children}
         </DropdownMenuTrigger>
         <DropdownMenuContent 
+
           onClick={(e) => e.stopPropagation()}
           className="w-56 z-[7]"
           side={side}
@@ -88,6 +90,7 @@ export const BoardCardActions = ({
             description={`This will delete the board and all of its contents.`}
             disabled={pending}
             onConfirm={onDelete}
+
           >
             <Button
               variant="ghost"
@@ -100,6 +103,7 @@ export const BoardCardActions = ({
 
         </DropdownMenuContent>
       </DropdownMenu>
+
   )
 }
 

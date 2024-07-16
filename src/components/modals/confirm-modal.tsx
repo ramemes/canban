@@ -9,17 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
@@ -38,6 +28,7 @@ export const ConfirmModal = ({
   disabled,
   header,
   description,
+  
 
 }: ConfirmModalProps) => {
   const handleConfirm = () => {
