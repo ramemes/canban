@@ -24,20 +24,20 @@ export const BoardCard = ({
   const { onOpen } = useRenameModal();
 
   const [showActions, setShowActions] = useState(false)
-  const actionsRef = useRef<HTMLDivElement>(null);
+  // const actionsRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (actionsRef.current && !actionsRef.current.contains(event.target as Node)) {
-      setShowActions(false); // Example function to call
-    }
-  };
+  // const handleClickOutside = (event: MouseEvent) => {
+  //   if (actionsRef.current && !actionsRef.current.contains(event.target as Node)) {
+  //     setShowActions(false); // Example function to call
+  //   }
+  // };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   return (
     <Link href={`/board/${id}`}>
@@ -59,9 +59,10 @@ export const BoardCard = ({
             className="h-[1000px] overflow-visible"
           />
           <div
-            ref={actionsRef}
+            // ref={actionsRef}
             onMouseEnter={(e) => e.stopPropagation()}
-            onMouseLeave={(e) => e.stopPropagation()}
+            onMouseLeave={(e) => e.stopPropagation()} 
+            onBlur={(e) => e.stopPropagation()} 
           >
             <BoardCardActions
               id={id}
