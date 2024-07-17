@@ -1,3 +1,5 @@
+"use client";
+
 import { ThemeSwitcher } from "@/components/navbar/theme-switcher";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -18,6 +20,7 @@ const LandingPage = () => {
         <div className="flex items-center space-x-3 px-3">
           <Image
             src="/logo.svg" 
+
             alt="logo"
             width={60}
             height={60}

@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { SignIn } from "@clerk/nextjs";
-import Image from "next/image";
-import Link from "next/link";
+"use client";
+
 
 interface LandingPageLayoutProps {
   children: React.ReactNode;
